@@ -1,18 +1,49 @@
 #include "spimcore.h"
 
-
 /* ALU */
 /* 10 Points */
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
-
+	if(ALUControl == 0)
+		*ALUresult = A + B;
+	else if(ALUControl == 1)
+		*ALUresult = A - B;
+	else if(ALUControl == 2){
+		if(A < B)
+			*ALUresult = 1;
+		else
+			*ALUresult = 0;
+	}
+	else if(ALUControl == 3){
+		if(A < B)
+			*ALUresult = 1;
+		else
+			*ALUresult = 0;
+	}
+	else if(ALUControl == 4)
+		*ALUresult = (A & B);
+	else if(ALUControl == 5)
+		*ALUresult = (A | B);
+	else if(ALUControl == 6)
+		B >> 16;
+	else if(ALUControl == '7')
+		*ALUresult == (!A);
+	
+	if(*ALUresult == 0)
+		*Zero = 1;
+	else
+		*Zero = 0;
 }
 
 /* instruction fetch */
 /* 10 Points */
 int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 {
+	if(PC % 4 != 0)
+		return 1;
 
+	*instruction = Mem[PC >> 2];
+	return 0;	
 }
 
 
@@ -20,6 +51,13 @@ int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 /* 10 Points */
 void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsigned *r2, unsigned *r3, unsigned *funct, unsigned *offset, unsigned *jsec)
 {
+	*op = (instruction & 0xFC000000) >> 26;
+	*r1 = (instruction & 0x3E00000) >> 21;
+	*r2 = (instruction & 0x1F0000) >> 16;
+	*r3 = (instruction & 0xF800) >> 11;
+	*funct = (instruction & 0x00003F);
+	*offset = (instruction & 0x00FFFF);
+	*jsec = (instruction & 0x3FFFFFF);
 
 }
 
