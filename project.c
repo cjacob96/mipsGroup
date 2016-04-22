@@ -252,6 +252,10 @@ void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,
 	if (MemtoReg == 1 && RegDst == 0 && RegWrite == 1) {
 		Reg[r2] = memdata;
     }
+    
+    else if (MemtoReg == 1 && RegDst == 1 && RegWrite == 1) {
+		Reg[r3] = memdata;
+    }
                   
     else if (MemtoReg == 0 && RegDst == 0 && RegWrite == 1) {
         Reg[r2] = ALUresult;
