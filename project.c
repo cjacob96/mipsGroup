@@ -89,7 +89,47 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 /* 10 Points */
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
+	if(ALUSrc == 1)
+		data2 = extended_value;
 
+	if(ALUOp == 7){
+		if(funct == 6)
+			ALU(data1, data2, 6, AlUresult, Zero); 
+		else if(funct == 32)
+			ALU(data1, data2, 0, ALUresult, Zero);
+		else if(funct == 34)
+			ALU(data1, data2, 1, ALUresult, Zero);
+		else if(funct == 36)
+			ALU(data1, data2, 4, ALUresult, Zero);
+		else if(funct == 37)
+			ALU(data1, data2, 5, ALUresult, Zero);
+		else if(funct ==39)
+			ALU(data1, data2, 7, ALUresult, Zero);
+		else if(funct == 42)
+			ALU(data1, data2, 2, ALUresult, Zero);
+		else if(funct == 43)
+			ALU(data1, data2, 3, ALUresult, Zero);
+		else return 1;
+	
+		return 0;	
+	}
+	else if(ALUOp == 0)
+		ALU(data1, data2, 0, ALUResult, Zero);
+	else if(ALUOp == 1)
+		ALU(data1, data2, 1, ALUResult, Zero);
+	else if(ALUOp == 2)
+		ALU(data1, data2, 2, ALUResult, Zero);
+	else if(ALUOp == 3)
+		ALU(data1, data2, 3, ALUResult, Zero);
+	else if(ALUOp == 4)
+		ALU(data1, data2, 4, ALUResult, Zero);
+	else if(ALUOp == 5)
+		ALU(data1, data2, 5, ALUResult, Zero);
+	else if(ALUOp == 6)
+		ALU(data1, data2, 6, ALUResult, Zero);
+	else return 1;
+	
+	return 0;
 }
 
 /* Read / Write Memory */
